@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NPS Cartera</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+font-family:'Segoe UI',Arial,sans-serif;
+margin:0;
+background:#f4f6fa;
+color:#333;
+}
+
+.header{
+background:#003b7a;
+color:white;
+padding:30px;
+text-align:center;
+}
+
+.kpis{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:15px;
+padding:20px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:20px;
+text-align:center;
+box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.value{
+font-size:32px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.container{
+padding:20px;
+}
+
+.panel{
+background:white;
+border-radius:12px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.panel-title{
+font-size:28px;
+font-weight:bold;
+color:#003b7a;
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#003b7a;
+color:white;
+padding:10px;
+}
+
+td{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.critical{
+background:#ffe5e5;
+}
+
+.hallazgo{
+background:#eef4ff;
+border-left:5px solid #003b7a;
+padding:12px;
+margin-bottom:12px;
+}
+
+.conclusion{
+background:#003b7a;
+color:white;
+padding:20px;
+border-radius:12px;
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>📊 Gestión Bases NPS Cartera</h1>
+
+<p>
+Análisis Ejecutivo Automatizado
+</p>
+
+<p>
+Última actualización:
+10/11/2026 16:32
+</p>
+
+</div>
+
+<div class="kpis">
+
+<div class="card">
+<h3>Base Analizada</h3>
+<div class="value">1,459,707</div>
+</div>
+
+<div class="card">
+<h3>Respuestas</h3>
+<div class="value">9,464</div>
+</div>
+
+<div class="card">
+<h3>Tasa Promedio</h3>
+<div class="value">0.65%</div>
+</div>
+
+<div class="card">
+<h3>Mejor Mes</h3>
+<div class="value">2025-07</div>
+</div>
+
+<div class="card">
+<h3>Peor Mes</h3>
+<div class="value">2026-10</div>
+</div>
+
+<div class="card">
+<h3>Policy Touch</h3>
+<div class="value">1,927</div>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="panel">
+
+<div class="panel-title">
+📈 Evolución Mensual
+</div>
+
+<canvas id="graficoMensual"></canvas>
+
+</div>
+
+<div class="panel">
+
+<div class="panel-title">
+📋 Desempeño por Mes
+</div>
+
+<table>
+
+<tr>
+<th>Mes</th>
+<th>Base</th>
+<th>Respuestas</th>
+<th>Tasa</th>
+<th>Estado</th>
+</tr>
+
+
+    <tr class="">
+        <td>2025-06</td>
+        <td>86,442</td>
+        <td>666</td>
+        <td>0.77%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2025-07</td>
+        <td>86,183</td>
+        <td>689</td>
+        <td>0.8%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2025-08</td>
+        <td>86,287</td>
+        <td>671</td>
+        <td>0.78%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2025-09</td>
+        <td>86,388</td>
+        <td>656</td>
+        <td>0.76%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2025-10</td>
+        <td>86,314</td>
+        <td>688</td>
+        <td>0.8%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2025-11</td>
+        <td>86,409</td>
+        <td>611</td>
+        <td>0.71%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2025-12</td>
+        <td>86,567</td>
+        <td>682</td>
+        <td>0.79%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-01</td>
+        <td>86,801</td>
+        <td>657</td>
+        <td>0.76%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-02</td>
+        <td>85,665</td>
+        <td>598</td>
+        <td>0.7%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-03</td>
+        <td>85,022</td>
+        <td>493</td>
+        <td>0.58%</td>
+        <td>🟡 Normal</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-04</td>
+        <td>84,934</td>
+        <td>618</td>
+        <td>0.73%</td>
+        <td>🟢 Alto</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-05</td>
+        <td>84,876</td>
+        <td>506</td>
+        <td>0.6%</td>
+        <td>🟡 Normal</td>
+    </tr>
+    
+    <tr class="critical">
+        <td>2026-06</td>
+        <td>85,424</td>
+        <td>330</td>
+        <td>0.39%</td>
+        <td>🔴 Crítico</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-07</td>
+        <td>85,987</td>
+        <td>413</td>
+        <td>0.48%</td>
+        <td>🟠 Bajo</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-08</td>
+        <td>85,469</td>
+        <td>471</td>
+        <td>0.55%</td>
+        <td>🟡 Normal</td>
+    </tr>
+    
+    <tr class="">
+        <td>2026-09</td>
+        <td>85,343</td>
+        <td>444</td>
+        <td>0.52%</td>
+        <td>🟡 Normal</td>
+    </tr>
+    
+    <tr class="critical">
+        <td>2026-10</td>
+        <td>85,596</td>
+        <td>271</td>
+        <td>0.32%</td>
+        <td>🔴 Crítico</td>
+    </tr>
+    
+
+</table>
+
+</div>
+
+<div class="panel">
+
+<div class="panel-title">
+🏆 Ranking Mensual
+</div>
+
+<table>
+<tr>
+<th>Top 3 Meses</th>
+<th>Tasa</th>
+</tr>
+
+
+    <tr>
+        <td>🥇 2025-07</td>
+        <td>0.8%</td>
+    </tr>
+    
+    <tr>
+        <td>🥈 2025-10</td>
+        <td>0.8%</td>
+    </tr>
+    
+    <tr>
+        <td>🥉 2025-12</td>
+        <td>0.79%</td>
+    </tr>
+    
+
+</table>
+
+<br>
+
+<table>
+<tr>
+<th>Meses con Oportunidad</th>
+<th>Tasa</th>
+<th>Variación</th>
+</tr>
+
+
+    <tr>
+        <td>2026-10</td>
+        <td>0.32%</td>
+        <td>-60.0%</td>
+    </tr>
+    
+    <tr>
+        <td>2026-06</td>
+        <td>0.39%</td>
+        <td>-51.2%</td>
+    </tr>
+    
+    <tr>
+        <td>2026-07</td>
+        <td>0.48%</td>
+        <td>-40.0%</td>
+    </tr>
+    
+
+</table>
+
+</div>
+
+<div class="panel">
+
+<div class="panel-title">
+📅 Validación Semana 4
+</div>
+
+<table>
+
+<tr>
+<th>Semana</th>
+<th>Base Promedio</th>
+<th>% Respuesta</th>
+</tr>
+
+
+    <tr>
+        <td>Semana 4</td>
+        <td>383,732.0</td>
+        <td>0.69%</td>
+    </tr>
+    
+    <tr>
+        <td>Semana 5</td>
+        <td>189,940.0</td>
+        <td>0.59%</td>
+    </tr>
+    
+    <tr>
+        <td>Semana Inicial</td>
+        <td>443,018.0</td>
+        <td>0.66%</td>
+    </tr>
+    
+
+</table>
+
+</div>
+
+<div class="panel">
+
+<div class="panel-title">
+🔍 Hallazgos Principales
+</div>
+
+<div class="hallazgo">
+✅ No se evidencia una caída estructural asociada a la Semana 4.
+</div>
+
+<div class="hallazgo">
+📊 El comportamiento parece depender más del mes que de la semana.
+</div>
+
+<div class="hallazgo">
+⚠️ Revisar meses con menor desempeño y exclusiones Policy Touch.
+</div>
+
+</div>
+
+<div class="conclusion">
+
+<h2>🏆 Conclusión Ejecutiva</h2>
+
+Los datos históricos no evidencian una caída recurrente por Semana 4.
+
+Las mayores variaciones se presentan en determinados meses y deben analizarse contra segmentación, campañas, contactabilidad y calidad de datos.
+
+</div>
+
+</div>
+
+<script>
+
+new Chart(
+document.getElementById(
+'graficoMensual'
+),
+{
+type:'line',
+
+data:{
+labels:[
+'2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10'
+],
+
+datasets:[{
+
+label:'% Respuesta',
+
+data:[
+0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32
+],
+
+borderColor:'#003b7a',
+
+backgroundColor:
+'rgba(0,59,122,.15)',
+
+fill:true,
+
+tension:0.35,
+
+pointRadius:6
+
+}]
+}
+
+});
+
+</script>
+
+</body>
+</html>
