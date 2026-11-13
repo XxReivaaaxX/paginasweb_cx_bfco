@@ -5,143 +5,423 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>NPS Cartera</title>
+<title>NPS Cartera Ejecutivo</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
-* {
+:root{
+    --primary:#003b7a;
+    --secondary:#0B2A55;
+    --success:#28a745;
+    --warning:#f4b400;
+    --danger:#dc3545;
+    --light:#f4f6fa;
+    --card:#ffffff;
+}
+
+*{
     box-sizing:border-box;
+    scroll-behavior:smooth;
 }
 
 body{
-    font-family:'Segoe UI',Arial,sans-serif;
     margin:0;
     background:#f4f6fa;
+    font-family:'Segoe UI',sans-serif;
     color:#333;
 }
 
-.header{
-    background:#003b7a;
+/* ================================== */
+/* HEADER */
+/* ================================== */
+
+.topbar{
+
+    position:sticky;
+    top:0;
+    z-index:999;
+
+    background:white;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+
+    border-bottom:1px solid #e8e8e8;
+}
+
+.topbar-wrap{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 25px;
+}
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:var(--primary);
+}
+
+.menu{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.menu a{
+
+    text-decoration:none;
+
+    color:var(--primary);
+
+    font-weight:600;
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    transition:.2s;
+}
+
+.menu a:hover{
+
+    background:#e7effd;
+}
+
+/* ================================== */
+/* HERO */
+/* ================================== */
+
+.hero{
+
+    background:
+    linear-gradient(
+    135deg,
+    #0B2A55,
+    #164A8A
+    );
+
     color:white;
-    padding:30px;
-    text-align:center;
+
+    padding:70px;
 }
 
-.header h1{
-    margin:0;
-    font-size:42px;
+.hero .eyebrow{
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    font-size:12px;
+
+    color:#c8ddff;
+
+    font-weight:bold;
 }
 
-.header p{
-    margin-top:10px;
+.hero h1{
+
+    font-size:48px;
+
+    max-width:950px;
+
+    margin:10px 0;
 }
+
+.hero p{
+
+    max-width:850px;
+
+    opacity:.9;
+
+    line-height:1.7;
+}
+
+/* ================================== */
+/* KPIS */
+/* ================================== */
 
 .kpis{
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:15px;
-    padding:20px;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    padding:25px;
 }
 
 .card{
+
     background:white;
-    border-radius:12px;
+
+    border-radius:14px;
+
     padding:20px;
+
     text-align:center;
+
     box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+    transition:.2s;
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
 }
 
 .card h3{
-    color:#003b7a;
+
+    color:var(--primary);
+
     margin:0;
 }
 
-.value{
-    font-size:32px;
+.card .value{
+
+    font-size:34px;
+
+    margin-top:12px;
+
     font-weight:bold;
-    margin-top:10px;
 }
 
+/* ================================== */
+/* GENERAL PANELS */
+/* ================================== */
+
 .container{
-    padding:20px;
+
+    padding:25px;
 }
 
 .panel{
+
     background:white;
-    padding:20px;
-    margin-bottom:20px;
-    border-radius:12px;
+
+    padding:25px;
+
+    border-radius:14px;
+
+    margin-bottom:25px;
+
     box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .panel-title{
+
+    color:var(--primary);
+
     font-size:28px;
-    color:#003b7a;
-    margin-bottom:20px;
+
+    font-weight:bold;
+
+    margin-bottom:25px;
+}
+
+.grid-2{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+}
+
+/* ================================== */
+/* FINDING */
+/* ================================== */
+
+.finding{
+
+    background:
+    linear-gradient(
+    135deg,
+    #ffffff,
+    #eef4ff
+    );
+
+    border-radius:16px;
+
+    padding:30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:30px;
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    background:#ffe7e7;
+
+    color:#b90000;
+
+    font-size:13px;
+
     font-weight:bold;
 }
 
+.metric{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+    box-shadow:0 2px 6px rgba(0,0,0,.05);
+}
+
+.metric .number{
+
+    font-size:32px;
+
+    color:var(--primary);
+
+    font-weight:bold;
+}
+
+/* ================================== */
+/* TABLES */
+/* ================================== */
+
 table{
+
     width:100%;
+
     border-collapse:collapse;
 }
 
 th{
-    background:#003b7a;
+
+    background:var(--primary);
+
     color:white;
+
     padding:12px;
 }
 
 td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
+
+    padding:12px;
+
+    border-bottom:1px solid #eee;
 }
 
 tr:hover{
-    background:#f7f8fa;
+
+    background:#f8f9fc;
 }
 
 .critical{
+
     background:#ffe5e5;
 }
 
 .semana4{
+
     background:#e7f6eb;
+
     font-weight:bold;
 }
 
-.hallazgo{
-    background:#eef4ff;
-    border-left:5px solid #003b7a;
-    padding:12px;
+/* ================================== */
+/* HALLAZGOS */
+/* ================================== */
+
+details{
+
+    background:white;
+
+    border-radius:12px;
+
     margin-bottom:10px;
-    border-radius:5px;
+
+    box-shadow:0 2px 6px rgba(0,0,0,.05);
+
+    padding:15px;
 }
 
+summary{
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    color:var(--primary);
+}
+
+/* ================================== */
+/* CONCLUSION */
+/* ================================== */
+
 .conclusion{
-    background:#003b7a;
+
+    background:var(--primary);
+
     color:white;
-    padding:25px;
-    border-radius:12px;
+
+    border-radius:14px;
+
+    padding:30px;
+
     line-height:1.8;
 }
 
+/* ================================== */
+/* RESPONSIVE */
+/* ================================== */
+
+@media(max-width:1000px)
+{
+
 .grid-2{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
+grid-template-columns:1fr;
 }
 
-@media(max-width:1000px){
-    .grid-2{
-        grid-template-columns:1fr;
-    }
+.hero{
+padding:40px;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+.topbar-wrap{
+flex-direction:column;
+gap:15px;
+}
+
 }
 
 </style>
@@ -150,236 +430,228 @@ tr:hover{
 
 <body>
 
-<div class="header">
+<!-- ===================================== -->
+<!-- MENÚ -->
+<!-- ===================================== -->
 
-<h1>📊 Gestión Bases NPS Cartera</h1>
+<header class="topbar">
 
-<p>
-Análisis Ejecutivo Automatizado
-</p>
+<div class="topbar-wrap">
 
-<p>
-Última actualización:
-<b>13/11/2026 12:53</b>
-</p>
+<div class="logo">
+📊 NPS Cartera
+</div>
+
+<nav class="menu">
+
+<a href="#hallazgo">
+Hallazgo
+</a>
+
+<a href="#evolucion">
+Evolución
+</a>
+
+<a href="#mensual">
+Mensual
+</a>
+
+<a href="#ranking">
+Ranking
+</a>
+
+<a href="#semana4">
+Semana 4
+</a>
+
+<a href="#hallazgos">
+Insights
+</a>
+
+<a href="#conclusion">
+Conclusión
+</a>
+
+</nav>
 
 </div>
 
-<div class="kpis">
+</header>
+
+<!-- ===================================== -->
+<!-- HERO -->
+<!-- ===================================== -->
+
+<section class="hero">
+
+<div class="eyebrow">
+ANÁLISIS EJECUTIVO | NPS CARTERA
+</div>
+
+<h1>
+
+Comprender qué impulsa la respuesta de clientes y validar si existe una caída estructural en Semana 4
+
+</h1>
+
+<p>
+
+Dashboard automatizado desde BigQuery.
+Actualización: {{fecha_actualizacion}}
+
+</p>
+
+</section>
+
+<!-- ===================================== -->
+<!-- KPIS -->
+<!-- ===================================== -->
+
+<section class="kpis">
 
 <div class="card">
 <h3>Base Analizada</h3>
-<div class="value">1,502,334</div>
+<div class="value">{{base_total}}</div>
 </div>
 
 <div class="card">
 <h3>Respuestas</h3>
-<div class="value">9,563</div>
+<div class="value">{{respuestas_total}}</div>
 </div>
 
 <div class="card">
 <h3>Tasa Promedio</h3>
-<div class="value">0.63%</div>
+<div class="value">{{tasa_promedio}}%</div>
 </div>
 
 <div class="card">
 <h3>Mejor Mes</h3>
-<div class="value">2025-07</div>
+<div class="value">{{mejor_mes}}</div>
 </div>
 
 <div class="card">
 <h3>Peor Mes</h3>
-<div class="value">2026-11</div>
+<div class="value">{{peor_mes}}</div>
 </div>
 
 <div class="card">
 <h3>Policy Touch</h3>
-<div class="value">1,927</div>
+<div class="value">{{policy_touch}}</div>
 </div>
 
-</div>
+</section>
 
 <div class="container">
 
-<div class="panel">
+<!-- ===================================== -->
+<!-- HALLAZGO PRINCIPAL -->
+<!-- ===================================== -->
+
+<section id="hallazgo" class="panel">
+
+<div class="finding">
+
+<div>
+
+<span class="badge">
+¿QUÉ DESCUBRIMOS?
+</span>
+
+<h2>
+
+La caída no está asociada a la Semana 4
+
+</h2>
+
+<p>
+
+La evidencia histórica muestra que la Semana 4 mantiene volúmenes estables y una tasa de respuesta superior a la Semana 5.
+
+</p>
+
+</div>
+
+<div>
+
+<div class="metric">
+
+<div class="number">
+{{mejor_tasa}}%
+</div>
+
+<div>
+Mejor Mes<br>
+{{mejor_mes}}
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="number">
+{{peor_tasa}}%
+</div>
+
+<div>
+Peor Mes<br>
+{{peor_mes}}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- EVOLUCIÓN -->
+<!-- ===================================== -->
+
+<section id="evolucion" class="panel">
 
 <div class="panel-title">
-
-📈 Evolución Mensual de Tasa de Respuesta
-
+📈 Evolución Mensual
 </div>
 
 <canvas id="graficoMensual"></canvas>
 
-</div>
+</section>
 
-<div class="panel">
+<!-- ===================================== -->
+<!-- TABLA MENSUAL -->
+<!-- ===================================== -->
+
+<section id="mensual" class="panel">
 
 <div class="panel-title">
-
-📋 Desempeño Mensual
-
+📋 Desempeño por Mes
 </div>
 
 <table>
 
 <tr>
+
 <th>Mes</th>
 <th>Base</th>
 <th>Respuestas</th>
 <th>Tasa</th>
 <th>Estado</th>
+
 </tr>
 
-
-    <tr class="">
-        <td>2025-06</td>
-        <td>86,442</td>
-        <td>666</td>
-        <td>0.77%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2025-07</td>
-        <td>86,183</td>
-        <td>689</td>
-        <td>0.8%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2025-08</td>
-        <td>86,287</td>
-        <td>671</td>
-        <td>0.78%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2025-09</td>
-        <td>86,388</td>
-        <td>656</td>
-        <td>0.76%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2025-10</td>
-        <td>86,314</td>
-        <td>688</td>
-        <td>0.8%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2025-11</td>
-        <td>86,409</td>
-        <td>611</td>
-        <td>0.71%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2025-12</td>
-        <td>86,567</td>
-        <td>682</td>
-        <td>0.79%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-01</td>
-        <td>86,801</td>
-        <td>657</td>
-        <td>0.76%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-02</td>
-        <td>85,665</td>
-        <td>598</td>
-        <td>0.7%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-03</td>
-        <td>85,022</td>
-        <td>493</td>
-        <td>0.58%</td>
-        <td>🟡 Normal</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-04</td>
-        <td>84,934</td>
-        <td>618</td>
-        <td>0.73%</td>
-        <td>🟢 Alto</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-05</td>
-        <td>84,876</td>
-        <td>506</td>
-        <td>0.6%</td>
-        <td>🟡 Normal</td>
-    </tr>
-    
-    <tr class="critical">
-        <td>2026-06</td>
-        <td>85,424</td>
-        <td>330</td>
-        <td>0.39%</td>
-        <td>🔴 Crítico</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-07</td>
-        <td>85,987</td>
-        <td>413</td>
-        <td>0.48%</td>
-        <td>🟠 Bajo</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-08</td>
-        <td>85,469</td>
-        <td>471</td>
-        <td>0.55%</td>
-        <td>🟡 Normal</td>
-    </tr>
-    
-    <tr class="">
-        <td>2026-09</td>
-        <td>85,343</td>
-        <td>444</td>
-        <td>0.52%</td>
-        <td>🟡 Normal</td>
-    </tr>
-    
-    <tr class="critical">
-        <td>2026-10</td>
-        <td>85,596</td>
-        <td>271</td>
-        <td>0.32%</td>
-        <td>🔴 Crítico</td>
-    </tr>
-    
-    <tr class="critical">
-        <td>2026-11</td>
-        <td>42,627</td>
-        <td>99</td>
-        <td>0.23%</td>
-        <td>🔴 Crítico</td>
-    </tr>
-    
+{{tabla_mensual}}
 
 </table>
 
-</div>
+</section>
+
+<!-- ===================================== -->
+<!-- RANKING -->
+<!-- ===================================== -->
+
+<section id="ranking">
 
 <div class="grid-2">
 
@@ -398,22 +670,7 @@ Análisis Ejecutivo Automatizado
 <th>Tasa</th>
 </tr>
 
-
-    <tr>
-        <td>🥇 2025-07</td>
-        <td>0.8%</td>
-    </tr>
-    
-    <tr>
-        <td>🥈 2025-10</td>
-        <td>0.8%</td>
-    </tr>
-    
-    <tr>
-        <td>🥉 2025-12</td>
-        <td>0.79%</td>
-    </tr>
-    
+{{top_html}}
 
 </table>
 
@@ -430,30 +687,14 @@ Análisis Ejecutivo Automatizado
 <table>
 
 <tr>
+
 <th>Mes</th>
 <th>Tasa</th>
 <th>Variación</th>
+
 </tr>
 
-
-    <tr>
-        <td>2026-11</td>
-        <td>0.23%</td>
-        <td>-71.2%</td>
-    </tr>
-    
-    <tr>
-        <td>2026-10</td>
-        <td>0.32%</td>
-        <td>-60.0%</td>
-    </tr>
-    
-    <tr>
-        <td>2026-06</td>
-        <td>0.39%</td>
-        <td>-51.2%</td>
-    </tr>
-    
+{{bottom_html}}
 
 </table>
 
@@ -461,7 +702,13 @@ Análisis Ejecutivo Automatizado
 
 </div>
 
-<div class="panel">
+</section>
+
+<!-- ===================================== -->
+<!-- SEMANA 4 -->
+<!-- ===================================== -->
+
+<section id="semana4" class="panel">
 
 <div class="panel-title">
 
@@ -472,48 +719,24 @@ Análisis Ejecutivo Automatizado
 <table>
 
 <tr>
+
 <th>Semana</th>
 <th>Base Promedio</th>
 <th>% Respuesta</th>
+
 </tr>
 
-
-    <tr>
-        <td>Semana 4</td>
-        <td class="semana4">
-            22,572
-        </td>
-        <td class="semana4">
-            0.68%
-        </td>
-    </tr>
-    
-    <tr>
-        <td>Semana 5</td>
-        <td class="">
-            21,104
-        </td>
-        <td class="">
-            0.59%
-        </td>
-    </tr>
-    
-    <tr>
-        <td>Semana Inicial</td>
-        <td class="">
-            51,592
-        </td>
-        <td class="">
-            0.62%
-        </td>
-    </tr>
-    
+{{tabla_semanas}}
 
 </table>
 
-</div>
+</section>
 
-<div class="panel">
+<!-- ===================================== -->
+<!-- HALLAZGOS -->
+<!-- ===================================== -->
+
+<section id="hallazgos" class="panel">
 
 <div class="panel-title">
 
@@ -521,55 +744,117 @@ Análisis Ejecutivo Automatizado
 
 </div>
 
-<div class="hallazgo">
-✅ El mejor desempeño se registró en 2025-07 con una tasa de 0.8%.
-</div>
+<details open>
 
-<div class="hallazgo">
-✅ El menor desempeño se registró en 2026-11 con una tasa de 0.23%.
-</div>
+<summary>
 
-<div class="hallazgo">
-⚠️ Se identificaron 1,927 registros excluidos por Policy Touch.
-</div>
+No existe caída estructural en Semana 4
 
-<div class="hallazgo">
-📉 La diferencia entre el mejor y peor mes corresponde a 71.2%.
-</div>
-
-<div class="hallazgo">
-📊 No se evidencia una caída estructural asociada a la Semana 4.
-</div>
-
-</div>
-
-<div class="conclusion">
-
-<h2>🏆 Conclusión Ejecutiva</h2>
+</summary>
 
 <p>
 
-Los datos históricos no evidencian una caída
-estructural asociada a la Semana 4.
+La semana 4 mantiene indicadores superiores frente a la semana 5.
 
-La variabilidad observada se concentra en
-meses específicos, siendo 2026-11
-el período de menor desempeño.
+</p>
 
-El mejor resultado corresponde a
-2025-07 con una tasa de respuesta
-de 0.8%.
+</details>
 
-Se recomienda profundizar el análisis
-sobre segmentación, calidad de datos,
-contactabilidad y exclusiones por
-Policy Touch.
+<details>
+
+<summary>
+
+{{hallazgo_1}}
+
+</summary>
+
+<p>
+
+Mayor desempeño histórico del período analizado.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>
+
+{{hallazgo_2}}
+
+</summary>
+
+<p>
+
+Mes con menor resultado observado.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>
+
+Policy Touch afecta contactabilidad
+
+</summary>
+
+<p>
+
+{{policy_touch}} registros fueron excluidos por esta causal.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>
+
+Brecha entre mejor y peor mes
+
+</summary>
+
+<p>
+
+{{hallazgo_4}}
+
+</p>
+
+</details>
+
+</section>
+
+<!-- ===================================== -->
+<!-- CONCLUSIÓN -->
+<!-- ===================================== -->
+
+<section id="conclusion">
+
+<div class="conclusion">
+
+<h2>
+
+🏆 Conclusión Ejecutiva
+
+</h2>
+
+<p>
+
+{{conclusion}}
 
 </p>
 
 </div>
 
+</section>
+
 </div>
+
+<!-- ===================================== -->
+<!-- CHART JS -->
+<!-- ===================================== -->
 
 <script>
 
@@ -580,28 +865,24 @@ document.getElementById(
 
 new Chart(ctx, {
 
-type: 'bar',
+type:'bar',
 
-data: {
+data:{
 
-labels: [
-'2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11'
+labels:[
+{{chart_labels}}
 ],
 
-datasets: [
+datasets:[
 
 {
-label:'% Respuesta',
+label:'Tasa de Respuesta',
 
 data:[
-0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.23
+{{chart_data}}
 ],
 
-backgroundColor:'#003b7a',
-
-borderColor:'#003b7a',
-
-yAxisID:'y'
+backgroundColor:'#003b7a'
 },
 
 {
@@ -610,53 +891,34 @@ type:'line',
 label:'Tendencia',
 
 data:[
-0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.23
+{{chart_data}}
 ],
 
 borderColor:'#28a745',
 
 backgroundColor:'#28a745',
 
+pointRadius:5,
+
 borderWidth:3,
 
 fill:false,
 
-tension:0.3,
-
-pointRadius:5,
-
-yAxisID:'y'
+tension:.3
 }
 
 ]
 
 },
 
-options: {
+options:{
 
 responsive:true,
 
-plugins: {
-
+plugins:{
 legend:{
 display:true
 }
-
-},
-
-scales: {
-
-y: {
-
-beginAtZero:true,
-
-title:{
-display:true,
-text:'% Respuesta'
-}
-
-}
-
 }
 
 }
@@ -666,6 +928,5 @@ text:'% Respuesta'
 </script>
 
 </body>
-
 </html>
 
