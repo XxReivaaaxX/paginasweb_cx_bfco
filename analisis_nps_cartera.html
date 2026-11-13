@@ -15,93 +15,133 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+* {
+    box-sizing:border-box;
+}
+
 body{
-font-family:'Segoe UI',Arial,sans-serif;
-margin:0;
-background:#f4f6fa;
-color:#333;
+    font-family:'Segoe UI',Arial,sans-serif;
+    margin:0;
+    background:#f4f6fa;
+    color:#333;
 }
 
 .header{
-background:#003b7a;
-color:white;
-padding:30px;
-text-align:center;
+    background:#003b7a;
+    color:white;
+    padding:30px;
+    text-align:center;
+}
+
+.header h1{
+    margin:0;
+    font-size:42px;
+}
+
+.header p{
+    margin-top:10px;
 }
 
 .kpis{
-display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:15px;
-padding:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    padding:20px;
 }
 
 .card{
-background:white;
-border-radius:12px;
-padding:20px;
-text-align:center;
-box-shadow:0 2px 8px rgba(0,0,0,.1);
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#003b7a;
+    margin:0;
 }
 
 .value{
-font-size:32px;
-font-weight:bold;
-margin-top:10px;
+    font-size:32px;
+    font-weight:bold;
+    margin-top:10px;
 }
 
 .container{
-padding:20px;
+    padding:20px;
 }
 
 .panel{
-background:white;
-border-radius:12px;
-padding:20px;
-margin-bottom:20px;
-box-shadow:0 2px 8px rgba(0,0,0,.1);
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .panel-title{
-font-size:28px;
-font-weight:bold;
-color:#003b7a;
-margin-bottom:20px;
+    font-size:28px;
+    color:#003b7a;
+    margin-bottom:20px;
+    font-weight:bold;
 }
 
 table{
-width:100%;
-border-collapse:collapse;
+    width:100%;
+    border-collapse:collapse;
 }
 
 th{
-background:#003b7a;
-color:white;
-padding:10px;
+    background:#003b7a;
+    color:white;
+    padding:12px;
 }
 
 td{
-padding:10px;
-border-bottom:1px solid #ddd;
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f7f8fa;
 }
 
 .critical{
-background:#ffe5e5;
+    background:#ffe5e5;
+}
+
+.semana4{
+    background:#e7f6eb;
+    font-weight:bold;
 }
 
 .hallazgo{
-background:#eef4ff;
-border-left:5px solid #003b7a;
-padding:12px;
-margin-bottom:12px;
+    background:#eef4ff;
+    border-left:5px solid #003b7a;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:5px;
 }
 
 .conclusion{
-background:#003b7a;
-color:white;
-padding:20px;
-border-radius:12px;
-line-height:1.8;
+    background:#003b7a;
+    color:white;
+    padding:25px;
+    border-radius:12px;
+    line-height:1.8;
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+@media(max-width:1000px){
+    .grid-2{
+        grid-template-columns:1fr;
+    }
 }
 
 </style>
@@ -120,7 +160,7 @@ Análisis Ejecutivo Automatizado
 
 <p>
 Última actualización:
-10/11/2026 16:32
+<b>13/11/2026 12:45</b>
 </p>
 
 </div>
@@ -129,17 +169,17 @@ Análisis Ejecutivo Automatizado
 
 <div class="card">
 <h3>Base Analizada</h3>
-<div class="value">1,459,707</div>
+<div class="value">1,502,334</div>
 </div>
 
 <div class="card">
 <h3>Respuestas</h3>
-<div class="value">9,464</div>
+<div class="value">9,563</div>
 </div>
 
 <div class="card">
 <h3>Tasa Promedio</h3>
-<div class="value">0.65%</div>
+<div class="value">0.63%</div>
 </div>
 
 <div class="card">
@@ -149,7 +189,7 @@ Análisis Ejecutivo Automatizado
 
 <div class="card">
 <h3>Peor Mes</h3>
-<div class="value">2026-10</div>
+<div class="value">2026-11</div>
 </div>
 
 <div class="card">
@@ -164,7 +204,9 @@ Análisis Ejecutivo Automatizado
 <div class="panel">
 
 <div class="panel-title">
-📈 Evolución Mensual
+
+📈 Evolución Mensual de Tasa de Respuesta
+
 </div>
 
 <canvas id="graficoMensual"></canvas>
@@ -174,7 +216,9 @@ Análisis Ejecutivo Automatizado
 <div class="panel">
 
 <div class="panel-title">
-📋 Desempeño por Mes
+
+📋 Desempeño Mensual
+
 </div>
 
 <table>
@@ -324,20 +368,33 @@ Análisis Ejecutivo Automatizado
         <td>🔴 Crítico</td>
     </tr>
     
+    <tr class="critical">
+        <td>2026-11</td>
+        <td>42,627</td>
+        <td>99</td>
+        <td>0.23%</td>
+        <td>🔴 Crítico</td>
+    </tr>
+    
 
 </table>
 
 </div>
 
+<div class="grid-2">
+
 <div class="panel">
 
 <div class="panel-title">
-🏆 Ranking Mensual
+
+🏆 Top 3 Meses
+
 </div>
 
 <table>
+
 <tr>
-<th>Top 3 Meses</th>
+<th>Mes</th>
 <th>Tasa</th>
 </tr>
 
@@ -360,16 +417,31 @@ Análisis Ejecutivo Automatizado
 
 </table>
 
-<br>
+</div>
+
+<div class="panel">
+
+<div class="panel-title">
+
+🚨 Meses con Oportunidad
+
+</div>
 
 <table>
+
 <tr>
-<th>Meses con Oportunidad</th>
+<th>Mes</th>
 <th>Tasa</th>
 <th>Variación</th>
 </tr>
 
 
+    <tr>
+        <td>2026-11</td>
+        <td>0.23%</td>
+        <td>-71.2%</td>
+    </tr>
+    
     <tr>
         <td>2026-10</td>
         <td>0.32%</td>
@@ -382,21 +454,19 @@ Análisis Ejecutivo Automatizado
         <td>-51.2%</td>
     </tr>
     
-    <tr>
-        <td>2026-07</td>
-        <td>0.48%</td>
-        <td>-40.0%</td>
-    </tr>
-    
 
 </table>
+
+</div>
 
 </div>
 
 <div class="panel">
 
 <div class="panel-title">
-📅 Validación Semana 4
+
+📅 Validación Hipótesis Semana 4
+
 </div>
 
 <table>
@@ -410,20 +480,32 @@ Análisis Ejecutivo Automatizado
 
     <tr>
         <td>Semana 4</td>
-        <td>383,732.0</td>
-        <td>0.69%</td>
+        <td class="semana4">
+            22,572
+        </td>
+        <td class="semana4">
+            0.68%
+        </td>
     </tr>
     
     <tr>
         <td>Semana 5</td>
-        <td>189,940.0</td>
-        <td>0.59%</td>
+        <td class="">
+            21,104
+        </td>
+        <td class="">
+            0.59%
+        </td>
     </tr>
     
     <tr>
         <td>Semana Inicial</td>
-        <td>443,018.0</td>
-        <td>0.66%</td>
+        <td class="">
+            51,592
+        </td>
+        <td class="">
+            0.62%
+        </td>
     </tr>
     
 
@@ -434,19 +516,29 @@ Análisis Ejecutivo Automatizado
 <div class="panel">
 
 <div class="panel-title">
+
 🔍 Hallazgos Principales
+
 </div>
 
 <div class="hallazgo">
-✅ No se evidencia una caída estructural asociada a la Semana 4.
+✅ El mejor desempeño se registró en 2025-07 con una tasa de 0.8%.
 </div>
 
 <div class="hallazgo">
-📊 El comportamiento parece depender más del mes que de la semana.
+✅ El menor desempeño se registró en 2026-11 con una tasa de 0.23%.
 </div>
 
 <div class="hallazgo">
-⚠️ Revisar meses con menor desempeño y exclusiones Policy Touch.
+⚠️ Se identificaron 1,927 registros excluidos por Policy Touch.
+</div>
+
+<div class="hallazgo">
+📉 La diferencia entre el mejor y peor mes corresponde a 71.2%.
+</div>
+
+<div class="hallazgo">
+📊 No se evidencia una caída estructural asociada a la Semana 4.
 </div>
 
 </div>
@@ -455,9 +547,25 @@ Análisis Ejecutivo Automatizado
 
 <h2>🏆 Conclusión Ejecutiva</h2>
 
-Los datos históricos no evidencian una caída recurrente por Semana 4.
+<p>
 
-Las mayores variaciones se presentan en determinados meses y deben analizarse contra segmentación, campañas, contactabilidad y calidad de datos.
+Los datos históricos no evidencian una caída
+estructural asociada a la Semana 4.
+
+La variabilidad observada se concentra en
+meses específicos, siendo 2026-11
+el período de menor desempeño.
+
+El mejor resultado corresponde a
+2025-07 con una tasa de respuesta
+de 0.8%.
+
+Se recomienda profundizar el análisis
+sobre segmentación, calidad de datos,
+contactabilidad y exclusiones por
+Policy Touch.
+
+</p>
 
 </div>
 
@@ -465,38 +573,92 @@ Las mayores variaciones se presentan en determinados meses y deben analizarse co
 
 <script>
 
-new Chart(
+const ctx =
 document.getElementById(
 'graficoMensual'
-),
-{
-type:'line',
+);
 
-data:{
-labels:[
-'2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10'
+new Chart(ctx, {
+
+type: 'bar',
+
+data: {
+
+labels: [
+'2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11'
 ],
 
-datasets:[{
+datasets: [
 
+{
 label:'% Respuesta',
 
 data:[
-0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32
+0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.23
 ],
+
+backgroundColor:'#003b7a',
 
 borderColor:'#003b7a',
 
-backgroundColor:
-'rgba(0,59,122,.15)',
+yAxisID:'y'
+},
 
-fill:true,
+{
+type:'line',
 
-tension:0.35,
+label:'Tendencia',
 
-pointRadius:6
+data:[
+0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.23
+],
 
-}]
+borderColor:'#28a745',
+
+backgroundColor:'#28a745',
+
+borderWidth:3,
+
+fill:false,
+
+tension:0.3,
+
+pointRadius:5,
+
+yAxisID:'y'
+}
+
+]
+
+},
+
+options: {
+
+responsive:true,
+
+plugins: {
+
+legend:{
+display:true
+}
+
+},
+
+scales: {
+
+y: {
+
+beginAtZero:true,
+
+title:{
+display:true,
+text:'% Respuesta'
+}
+
+}
+
+}
+
 }
 
 });
@@ -504,4 +666,6 @@ pointRadius:6
 </script>
 
 </body>
+
 </html>
+
