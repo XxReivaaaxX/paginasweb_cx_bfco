@@ -16,12 +16,15 @@ content="width=device-width, initial-scale=1.0">
 <style>
 
 :root{
-    --primary:#003b7a;
-    --secondary:#0B2A55;
-    --success:#28a745;
-    --warning:#f4b400;
-    --danger:#dc3545;
-    --light:#f4f6fa;
+    --primary:#6BB500;
+    --primary-dark:#4C8F00;
+    --secondary:#2B3137;
+    --success:#6BB500;
+    --warning:#FFB800;
+    --danger:#E53935;
+    --light:#F5F6F7;
+    --falabella-green:#6BB500;
+    --falabella-dark:#4C8F00;
 }
 
 *{
@@ -43,10 +46,10 @@ body{
     top:0;
 
     z-index:999;
-
+    
     background:white;
-
-    border-bottom:1px solid #e8e8e8;
+    
+    border-bottom:4px solid #6BB500;
 
     box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
@@ -102,15 +105,16 @@ body{
 
 .hero{
 
-    background:
+   background:
     linear-gradient(
         135deg,
-        #0B2A55,
-        #164A8A
-    );
-
+        #6BB500,
+        #4C8F00
+);
     color:white;
-
+    padding:70px;
+    );
+    color:white;
     padding:70px;
 }
 
@@ -160,18 +164,12 @@ body{
 }
 
 .card{
-
+    
     background:white;
-
+    border-top:5px solid #6BB500;
     border-radius:14px;
-
     padding:22px;
-
     text-align:center;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-
-    transition:.2s;
 }
 
 .card:hover{
@@ -258,19 +256,13 @@ body{
 }
 
 .badge{
-
+    
     display:inline-block;
-
-    background:#ffe5e5;
-
-    color:#b80000;
-
+    background:#EAF6D5;
+    color:#4C8F00;
     padding:8px 14px;
-
     border-radius:20px;
-
     font-size:12px;
-
     font-weight:bold;
 }
 
@@ -308,12 +300,8 @@ table{
 }
 
 th{
-
-    background:#003b7a;
-
+    background:#6BB500;
     color:white;
-
-    padding:12px;
 }
 
 td{
@@ -341,15 +329,11 @@ tr:hover{
 }
 
 .hallazgo{
-
-    background:#eef4ff;
-
-    border-left:5px solid #003b7a;
-
+    
+    background:#F5FAEC;
+    border-left:6px solid #6BB500;
     padding:15px;
-
     margin-bottom:12px;
-
     border-radius:4px;
 }
 
@@ -377,15 +361,10 @@ summary{
 
 .conclusion{
 
-    background:#003b7a;
-
+    background:#4C8F00;
     color:white;
-
     padding:30px;
-
     border-radius:14px;
-
-    line-height:1.8;
 }
 
 @media(max-width:1000px){
@@ -461,7 +440,7 @@ Comprender qué impulsa la respuesta de clientes y validar si existe una caída 
 
 <p>
 
-Actualización: 13/11/2026 13:23
+Actualización: 13/11/2026 15:13
 
 </p>
 
@@ -1176,7 +1155,7 @@ data:[
 0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.23
 ],
 
-backgroundColor:'#003b7a',
+backgroundColor:'#6BB500',
 
 borderRadius:6
 
@@ -1192,7 +1171,7 @@ data:[
 0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.23
 ],
 
-borderColor:'#28a745',
+borderColor:'#2B3137',
 
 backgroundColor:'#28a745',
 
