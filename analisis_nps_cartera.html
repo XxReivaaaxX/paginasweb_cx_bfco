@@ -1,1218 +1,539 @@
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="img" href="../Imagenes/banco-falabella.svg">
-<title>NPS Cartera - BFCO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPS Cartera - Banco Falabella</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
-
-:root{
-    --primary:#008F39;
-    --primary-dark:#006F2C;
-    --secondary:#2B3137;
-    --success:#008F39;
-    --warning:#FFB800;
-    --danger:#D32F2F;
-    --light:#F5F6F7;
+:root {
+  --primary:#008F39;
+  --primary-dark:#006F2C;
+  --secondary:#2B3137;
+  --success:#008F39;
+  --warning:#FFB800;
+  --danger:#D32F2F;
+  --light:#F5F6F7;
 }
-
-*{
-    box-sizing:border-box;
-    scroll-behavior:smooth;
+* { box-sizing:border-box; scroll-behavior:smooth; }
+body { margin:0; background:#F5F6F7; font-family:'Segoe UI',Arial,sans-serif; color:#333; }
+#loginScreen { position:fixed; inset:0; z-index:99999; display:flex; justify-content:center; align-items:center; background:linear-gradient(135deg,#008F39,#006F2C); padding:20px; }
+.login-card { background:white; width:100%; max-width:430px; padding:40px; border-radius:20px; text-align:center; box-shadow:0 15px 45px rgba(0,0,0,.2); }
+.login-logo { margin-bottom:25px; }
+.login-logo img { max-width:190px; max-height:65px; object-fit:contain; }
+.login-icon { font-size:42px; margin-bottom:10px; }
+.login-card h1 { color:#008F39; font-size:32px; margin:10px 0; }
+.login-subtitle { color:#777; font-size:15px; }
+.login-divider { height:3px; background:#008F39; width:60px; margin:25px auto; border-radius:10px; }
+.login-card label { display:block; text-align:left; font-weight:600; margin-bottom:10px; color:#444; }
+.password-container { display:flex; border:1px solid #ddd; border-radius:10px; overflow:hidden; margin-bottom:15px; }
+.password-container input { flex:1; border:none; padding:15px; outline:none; font-size:15px; min-width:0; }
+.eye-button { border:none; background:white; padding:0 15px; cursor:pointer; font-size:18px; }
+.login-button { width:100%; padding:15px; border:none; border-radius:10px; background:#008F39; color:white; font-weight:bold; font-size:15px; cursor:pointer; transition:.2s; }
+.login-button:hover { background:#006F2C; }
+.login-error { color:#dc3545; font-size:13px; margin-bottom:12px; min-height:18px; }
+.login-footer { margin-top:25px; font-size:12px; color:#999; line-height:1.8; }
+#dashboardContent { display:none; }
+.topbar { position:sticky; top:0; z-index:999; background:white; border-bottom:4px solid #008F39; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+.topbar-wrap { display:flex; justify-content:space-between; align-items:center; padding:15px 25px; }
+.logo { font-size:25px; font-weight:bold; color:var(--primary); }
+.menu { display:flex; gap:10px; flex-wrap:wrap; }
+.menu a { text-decoration:none; color:black; padding:8px 14px; border-radius:10px; font-weight:600; transition:.2s; }
+.menu a:hover { background:#eef4ff; }
+.hero { background:linear-gradient(135deg,#008F39,#006F2C); color:white; padding:70px; }
+.hero .eyebrow { font-size:12px; letter-spacing:3px; color:white; font-weight:bold; }
+.hero h1 { font-size:56px; line-height:1.15; max-width:1100px; margin:15px 0 20px; }
+.hero p { max-width:900px; font-size:18px; opacity:.9; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; padding:20px; }
+.card { background:white; border-top:5px solid #008F39; border-radius:14px; padding:22px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.1); transition:.2s; }
+.card:hover { transform:translateY(-4px); }
+.card h3 { margin:0; font-size:16px; color:var(--primary); }
+.value { margin-top:10px; font-size:38px; color:#008F39; font-weight:bold; }
+.container { padding:20px; }
+.panel { background:white; padding:25px; border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,.08); margin-bottom:20px; }
+.panel-title { font-size:30px; font-weight:bold; color:#008F39; margin-bottom:25px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.finding { display:flex; justify-content:space-between; align-items:center; gap:30px; padding:30px; border-radius:18px; background:linear-gradient(135deg,#ffffff,#eef4ff); }
+.badge { display:inline-block; background:#E6F7EC; color:#008F39; padding:8px 14px; border-radius:20px; font-size:12px; font-weight:bold; }
+.metric { background:white; padding:20px; border-radius:14px; width:260px; text-align:center; margin-bottom:15px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.metric .number { color:#008F39; font-size:42px; font-weight:bold; }
+table { width:100%; border-collapse:collapse; }
+th { background:#008F39; color:white; padding:12px; }
+td { padding:10px; border-bottom:1px solid #e7e7e7; }
+tr:hover { background:#f7f9fc; }
+.critical { background:#ffe5e5; }
+.semana4 { background:#e7f6eb; font-weight:bold; }
+.hallazgo { background:#F5FAEC; border-left:6px solid #008F39; padding:15px; margin-bottom:12px; border-radius:4px; }
+details { background:white; border-radius:12px; margin-bottom:10px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+summary { font-weight:bold; cursor:pointer; color:#008F39; }
+.conclusion { background:#008F39; color:white; padding:30px; border-radius:14px; line-height:1.8; }
+.chart-container { position:relative; width:100%; height:380px; }
+section[id] { scroll-margin-top:100px; }
+@media(max-width:1000px) {
+  .grid-2 { grid-template-columns:1fr; }
+  .hero { padding:40px; }
+  .hero h1 { font-size:38px; }
+  .finding { flex-direction:column; }
+  .topbar-wrap { flex-direction:column; gap:15px; }
+  .menu { justify-content:center; }
 }
-
-body{
-    margin:0;
-    background:#f4f6fa;
-    font-family:'Segoe UI',sans-serif;
-    color:#333;
+@media(max-width:600px) {
+  .hero h1 { font-size:30px; }
+  .panel { padding:15px; overflow-x:auto; }
+  table { min-width:550px; }
+  .metric { width:100%; }
 }
-
-.topbar{
-
-    position:sticky;
-
-    top:0;
-
-    z-index:999;
-    
-    background:white;
-    border-bottom:4px solid #008F39;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.topbar-wrap{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:15px 25px;
-}
-
-.logo{
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:var(--primary);
-}
-
-.menu{
-
-    display:flex;
-
-    gap:10px;
-
-    flex-wrap:wrap;
-}
-
-.menu a{
-
-    text-decoration:none;
-
-    color:black;
-
-    padding:8px 14px;
-
-    border-radius:10px;
-
-    font-weight:600;
-
-    transition:.2s;
-}
-
-.menu a:hover{
-
-    background:#eef4ff;
-}
-
-.hero{
-    
-    background:
-    linear-gradient(
-    135deg,
-    #008F39,
-    #006F2C
-);
-    color:white;
-    padding:70px;
-    );
-    color:white;
-    padding:70px;
-}
-
-.hero .eyebrow{
-
-    font-size:12px;
-
-    letter-spacing:3px;
-
-    color: white;
-
-    font-weight:bold;
-}
-
-.hero h1{
-
-    font-size:56px;
-
-    line-height:1.15;
-
-    max-width:1100px;
-
-    margin-top:15px;
-
-    margin-bottom:20px;
-}
-
-.hero p{
-
-    max-width:900px;
-
-    font-size:18px;
-
-    opacity:.9;
-}
-
-.kpis{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
-    gap:18px;
-
-    padding:20px;
-}
-
-.card{
-    
-    background:white;
-    border-top:5px solid #008F39;
-    border-radius:14px;
-    padding:22px;
-    text-align:center;
-}
-
-.card:hover{
-
-    transform:translateY(-4px);
-}
-
-.card h3{
-
-    margin:0;
-
-    font-size:16px;
-
-    color:var(--primary);
-}
-
-.value{
-
-    margin-top:10px;
-    font-size:38px;
-    color:#008F39;
-    font-weight:bold;
-}
-
-.container{
-
-    padding:20px;
-}
-
-.panel{
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:14px;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-
-    margin-bottom:20px;
-}
-
-.panel-title{
-
-    font-size:30px;
-
-    font-weight:bold;
-
-    color:#008F39;
-
-    margin-bottom:25px;
-}
-
-.grid-2{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:20px;
-}
-
-.finding{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:30px;
-
-    padding:30px;
-
-    border-radius:18px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #ffffff,
-        #eef4ff
-    );
-}
-
-.badge{
-    
-    display:inline-block;
-    bbackground:#E6F7EC;
-    color:#008F39;
-    padding:8px 14px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.metric{
-
-    background:white;
-
-    padding:20px;
-
-    border-radius:14px;
-
-    width:260px;
-
-    text-align:center;
-
-    margin-bottom:15px;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-
-.metric .number{
-
-    color:#008F39;
-    font-size:42px;
-    font-weight:bold;
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-}
-
-th{
-    background:#008F39;
-    color:white;
-}
-
-td{
-
-    padding:10px;
-
-    border-bottom:1px solid #e7e7e7;
-}
-
-tr:hover{
-
-    background:#f7f9fc;
-}
-
-.critical{
-
-    background:#ffe5e5;
-}
-
-.semana4{
-
-    background:#e7f6eb;
-
-    font-weight:bold;
-}
-
-.hallazgo{
-    
-    background:#F5FAEC;
-    border-left:6px solid #008F39;
-    padding:15px;
-    margin-bottom:12px;
-    border-radius:4px;
-}
-
-details{
-
-    background:white;
-
-    border-radius:12px;
-
-    margin-bottom:10px;
-
-    padding:15px;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-summary{
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    color:#008F39;
-}
-
-.conclusion{
-
-    background:#008F39;
-    color:white;
-    padding:30px;
-    border-radius:14px;
-}
-
-@media(max-width:1000px){
-
-.grid-2{
-grid-template-columns:1fr;
-}
-
-.hero h1{
-font-size:38px;
-}
-
-.finding{
-flex-direction:column;
-}
-
-.topbar-wrap{
-flex-direction:column;
-gap:15px;
-}
-
-}
-
 </style>
-
 </head>
-
 <body>
 
+<!-- Pantalla de acceso visual -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="Imagenes/banco-falabella.svg" alt="Banco Falabella"
+           onerror="this.style.display='none'; this.parentElement.innerHTML='BANCO FALABELLA';">
+    </div>
+    <div class="login-icon">📊</div>
+    <h1>NPS Cartera</h1>
+    <p class="login-subtitle">Dashboard de Experiencia del Cliente</p>
+    <div class="login-divider"></div>
+    <label for="passwordInput">Contraseña de acceso</label>
+    <div class="password-container">
+      <input type="password" id="passwordInput"
+             placeholder="Ingresa tu contraseña"
+             autocomplete="current-password">
+      <button type="button" id="eyeButton" class="eye-button" aria-label="Mostrar contraseña">👁</button>
+    </div>
+    <div id="loginError" class="login-error" aria-live="polite"></div>
+    <button class="login-button" id="loginButton">INGRESAR</button>
+    <div class="login-footer">
+      🔒 Acceso restringido a usuarios autorizados.<br>
+      Banco Falabella | Experiencia del Cliente
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard oculto hasta ingresar -->
+<div id="dashboardContent">
 <header class="topbar">
-
-<div class="topbar-wrap">
-
-<div class="logo">
-NPS Cartera
-</div>
-
-<nav class="menu">
-
-<a href="#hallazgo">Hallazgo</a>
-
-<a href="#evolucion">Evolución</a>
-
-<a href="#mensual">Mensual</a>
-
-<a href="#ranking">Ranking</a>
-
-<a href="#semana4">Semana 4</a>
-
-<a href="#hallazgos">Insights</a>
-
-<a href="#conclusion">Conclusión</a>
-
-</nav>
-
-</div>
-
+  <div class="topbar-wrap">
+    <div class="logo">NPS Cartera</div>
+    <nav class="menu">
+      <a href="#hallazgo">Hallazgo</a>
+      <a href="#evolucion">Evolución</a>
+      <a href="#mensual">Mensual</a>
+      <a href="#ranking">Ranking</a>
+      <a href="#semana4">Semana 4</a>
+      <a href="#hallazgos">Insights</a>
+      <a href="#conclusion">Conclusión</a>
+    </nav>
+  </div>
 </header>
 
 <section class="hero">
-
-<div class="eyebrow">
-
-ANÁLISIS | NPS CARTERA
-
-</div>
-
-<h1>
-
-Comprender qué impulsa la respuesta de clientes y validar si existe una caída estructural en Semana 4
-
-</h1>
-
-<p>
-
-Actualización: 23/11/2026 13:22
-
-</p>
-
+  <div class="eyebrow">ANÁLISIS EJECUTIVO | NPS CARTERA</div>
+  <h1>Comprender qué impulsa la respuesta de clientes y validar si existe una caída estructural en Semana 4</h1>
+  <p>Dashboard automatizado desde BigQuery. Actualización: 23/11/2026 17:51</p>
 </section>
 
 <section class="kpis">
-
-<div class="card">
-<h3>Base Analizada</h3>
-<div class="value">1,523,647</div>
-</div>
-
-<div class="card">
-<h3>Respuestas</h3>
-<div class="value">9,638</div>
-</div>
-
-<div class="card">
-<h3>Tasa Promedio</h3>
-<div class="value">0.63%</div>
-</div>
-
-<div class="card">
-<h3>Mejor Mes</h3>
-<div class="value">2025-07</div>
-</div>
-
-<div class="card">
-<h3>Peor Mes</h3>
-<div class="value">2026-11</div>
-</div>
-
-<div class="card">
-<h3>Policy Touch</h3>
-<div class="value">1,927</div>
-</div>
-
+  <div class="card"><h3>Base Analizada</h3><div class="value">1.523.647</div></div>
+  <div class="card"><h3>Respuestas</h3><div class="value">9.638</div></div>
+  <div class="card"><h3>Tasa Promedio</h3><div class="value">0,63%</div></div>
+  <div class="card"><h3>Mejor Mes</h3><div class="value">2025-07</div></div>
+  <div class="card"><h3>Peor Mes</h3><div class="value">2026-11</div></div>
+  <div class="card"><h3>Policy Touch</h3><div class="value">1.927</div></div>
 </section>
 
 <div class="container">
-
-<!-- ===================================== -->
-<!-- HALLAZGO PRINCIPAL -->
-<!-- ===================================== -->
-
 <section id="hallazgo" class="panel">
-
-<div class="finding">
-
-<div>
-
-<span class="badge">
-
-¿QUÉ SE DESCUBRIÓ?
-
-</span>
-
-<h2>
-
-La caída no está asociada a la Semana 4
-
-</h2>
-
-<p>
-
-Los datos históricos muestran que la Semana 4 mantiene una conversión superior a la Semana 5 y no presenta disminuciones relevantes en volumen de base.
-
-</p>
-
-<br>
-
-<p>
-
-✅ El mejor desempeño se registró en 2025-07 con una tasa de 0.8%.
-
-</p>
-
-<p>
-
-⚠ El menor desempeño se registró en 2026-11 con una tasa de 0.27%.
-
-</p>
-
-</div>
-
-<div>
-
-<div class="metric">
-
-<div class="number">
-
-0.8%
-
-</div>
-
-<div>
-
-Mejor Mes
-
-<br>
-
-<b>2025-07</b>
-
-</div>
-
-</div>
-
-<div class="metric">
-
-<div class="number">
-
-0.27%
-
-</div>
-
-<div>
-
-Peor Mes
-
-<br>
-
-<b>2026-11</b>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+  <div class="finding">
+    <div>
+      <span class="badge">¿QUÉ SE DESCUBRIÓ?</span>
+      <h2>La caída no está asociada a la Semana 4</h2>
+      <p>Los datos históricos muestran que la Semana 4 mantiene una conversión superior a la Semana 5 y no presenta disminuciones relevantes en volumen de base.</p>
+      <p>✅ El mejor desempeño se registró en 2025-07 con una tasa de 0,80%.</p>
+      <p>⚠ El menor desempeño se registró en 2026-11 con una tasa de 0,27%.</p>
+    </div>
+    <div>
+      <div class="metric"><div class="number">0,80%</div><div>Mejor Mes<br><b>2025-07</b></div></div>
+      <div class="metric"><div class="number">0,27%</div><div>Peor Mes<br><b>2026-11</b></div></div>
+    </div>
+  </div>
 </section>
 
-<!-- ===================================== -->
-<!-- EVOLUCIÓN -->
-<!-- ===================================== -->
-
-<section
-id="evolucion"
-class="panel">
-
-<div class="panel-title">
-
-📈 Evolución Mensual
-
-</div>
-
-<canvas
-id="graficoMensual">
-
-</canvas>
-
-<br>
-
-<div class="hallazgo">
-
-📊 La línea verde representa la tendencia de comportamiento mensual y las barras azules la tasa de respuesta observada.
-
-</div>
-
+<section id="evolucion" class="panel">
+  <div class="panel-title">📈 Evolución Mensual</div>
+  <div class="chart-container"><canvas id="graficoMensual"></canvas></div>
+  <br>
+  <div class="hallazgo">📊 Las barras muestran la tasa de respuesta mensual y la línea representa la tendencia del período.</div>
 </section>
 
-<!-- ===================================== -->
-<!-- TABLA MENSUAL -->
-<!-- ===================================== -->
-
-<section
-id="mensual"
-class="panel">
-
-<div class="panel-title">
-
-📋 Desempeño Mensual
-
-</div>
-
-<table>
-
-<tr>
-
-<th>Mes</th>
-
-<th>Base</th>
-
-<th>Respuestas</th>
-
-<th>Tasa</th>
-
-<th>Estado</th>
-
-</tr>
-
-
+<section id="mensual" class="panel">
+  <div class="panel-title">📋 Desempeño Mensual</div>
+  <table>
+    <tr><th>Mes</th><th>Base</th><th>Respuestas</th><th>Tasa</th><th>Estado</th></tr>
+    
     <tr class="">
-        <td>2025-06</td>
-        <td>86,442</td>
-        <td>666</td>
-        <td>0.77%</td>
-        <td>🟢 Alto</td>
+      <td>2025-06</td>
+      <td>86.442</td>
+      <td>666</td>
+      <td>0,77%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2025-07</td>
-        <td>86,183</td>
-        <td>689</td>
-        <td>0.8%</td>
-        <td>🟢 Alto</td>
+      <td>2025-07</td>
+      <td>86.183</td>
+      <td>689</td>
+      <td>0,80%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2025-08</td>
-        <td>86,287</td>
-        <td>671</td>
-        <td>0.78%</td>
-        <td>🟢 Alto</td>
+      <td>2025-08</td>
+      <td>86.287</td>
+      <td>671</td>
+      <td>0,78%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2025-09</td>
-        <td>86,388</td>
-        <td>656</td>
-        <td>0.76%</td>
-        <td>🟢 Alto</td>
+      <td>2025-09</td>
+      <td>86.388</td>
+      <td>656</td>
+      <td>0,76%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2025-10</td>
-        <td>86,314</td>
-        <td>688</td>
-        <td>0.8%</td>
-        <td>🟢 Alto</td>
+      <td>2025-10</td>
+      <td>86.314</td>
+      <td>688</td>
+      <td>0,80%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2025-11</td>
-        <td>86,409</td>
-        <td>611</td>
-        <td>0.71%</td>
-        <td>🟢 Alto</td>
+      <td>2025-11</td>
+      <td>86.409</td>
+      <td>611</td>
+      <td>0,71%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2025-12</td>
-        <td>86,567</td>
-        <td>682</td>
-        <td>0.79%</td>
-        <td>🟢 Alto</td>
+      <td>2025-12</td>
+      <td>86.567</td>
+      <td>682</td>
+      <td>0,79%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2026-01</td>
-        <td>86,801</td>
-        <td>657</td>
-        <td>0.76%</td>
-        <td>🟢 Alto</td>
+      <td>2026-01</td>
+      <td>86.801</td>
+      <td>657</td>
+      <td>0,76%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2026-02</td>
-        <td>85,665</td>
-        <td>598</td>
-        <td>0.7%</td>
-        <td>🟢 Alto</td>
+      <td>2026-02</td>
+      <td>85.665</td>
+      <td>598</td>
+      <td>0,70%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2026-03</td>
-        <td>85,022</td>
-        <td>493</td>
-        <td>0.58%</td>
-        <td>🟡 Normal</td>
+      <td>2026-03</td>
+      <td>85.022</td>
+      <td>493</td>
+      <td>0,58%</td>
+      <td>🟡 Normal</td>
     </tr>
     
     <tr class="">
-        <td>2026-04</td>
-        <td>84,934</td>
-        <td>618</td>
-        <td>0.73%</td>
-        <td>🟢 Alto</td>
+      <td>2026-04</td>
+      <td>84.934</td>
+      <td>618</td>
+      <td>0,73%</td>
+      <td>🟢 Alto</td>
     </tr>
     
     <tr class="">
-        <td>2026-05</td>
-        <td>84,876</td>
-        <td>506</td>
-        <td>0.6%</td>
-        <td>🟡 Normal</td>
+      <td>2026-05</td>
+      <td>84.876</td>
+      <td>506</td>
+      <td>0,60%</td>
+      <td>🟡 Normal</td>
     </tr>
     
     <tr class="critical">
-        <td>2026-06</td>
-        <td>85,424</td>
-        <td>330</td>
-        <td>0.39%</td>
-        <td>🔴 Crítico</td>
+      <td>2026-06</td>
+      <td>85.424</td>
+      <td>330</td>
+      <td>0,39%</td>
+      <td>🔴 Critico</td>
     </tr>
     
     <tr class="">
-        <td>2026-07</td>
-        <td>85,987</td>
-        <td>413</td>
-        <td>0.48%</td>
-        <td>🟠 Bajo</td>
+      <td>2026-07</td>
+      <td>85.987</td>
+      <td>413</td>
+      <td>0,48%</td>
+      <td>🟠 Bajo</td>
     </tr>
     
     <tr class="">
-        <td>2026-08</td>
-        <td>85,469</td>
-        <td>471</td>
-        <td>0.55%</td>
-        <td>🟡 Normal</td>
+      <td>2026-08</td>
+      <td>85.469</td>
+      <td>471</td>
+      <td>0,55%</td>
+      <td>🟡 Normal</td>
     </tr>
     
     <tr class="">
-        <td>2026-09</td>
-        <td>85,343</td>
-        <td>444</td>
-        <td>0.52%</td>
-        <td>🟡 Normal</td>
+      <td>2026-09</td>
+      <td>85.343</td>
+      <td>444</td>
+      <td>0,52%</td>
+      <td>🟡 Normal</td>
     </tr>
     
     <tr class="critical">
-        <td>2026-10</td>
-        <td>85,596</td>
-        <td>271</td>
-        <td>0.32%</td>
-        <td>🔴 Crítico</td>
+      <td>2026-10</td>
+      <td>85.596</td>
+      <td>271</td>
+      <td>0,32%</td>
+      <td>🔴 Critico</td>
     </tr>
     
     <tr class="critical">
-        <td>2026-11</td>
-        <td>63,940</td>
-        <td>174</td>
-        <td>0.27%</td>
-        <td>🔴 Crítico</td>
+      <td>2026-11</td>
+      <td>63.940</td>
+      <td>174</td>
+      <td>0,27%</td>
+      <td>🔴 Critico</td>
     </tr>
     
-
-</table>
-
+  </table>
 </section>
 
-<!-- ===================================== -->
-<!-- RANKING -->
-<!-- ===================================== -->
-
-<section
-id="ranking">
-
-<div class="grid-2">
-
-<div class="panel">
-
-<div class="panel-title">
-
-🏆 Top 3 Meses
-
-</div>
-
-<table>
-
-<tr>
-
-<th>Mes</th>
-
-<th>Tasa</th>
-
-</tr>
-
-
+<section id="ranking">
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">🏆 Top 3 Meses</div>
+      <table><tr><th>Mes</th><th>Tasa</th></tr>
     <tr>
-        <td>🥇 2025-07</td>
-        <td>0.8%</td>
+      <td>🥇 2025-07</td>
+      <td>0,80%</td>
     </tr>
     
     <tr>
-        <td>🥈 2025-10</td>
-        <td>0.8%</td>
+      <td>🥈 2025-10</td>
+      <td>0,80%</td>
     </tr>
     
     <tr>
-        <td>🥉 2025-12</td>
-        <td>0.79%</td>
+      <td>🥉 2025-12</td>
+      <td>0,79%</td>
     </tr>
-    
-
-</table>
-
-</div>
-
-<div class="panel">
-
-<div class="panel-title">
-
-🚨 Meses con Oportunidad
-
-</div>
-
-<table>
-
-<tr>
-
-<th>Mes</th>
-
-<th>Tasa</th>
-
-<th>Variación</th>
-
-</tr>
-
-
+    </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title">🚨 Meses con Oportunidad</div>
+      <table><tr><th>Mes</th><th>Tasa</th><th>Variación</th></tr>
     <tr>
-        <td>2026-11</td>
-        <td>0.27%</td>
-        <td>-66.2%</td>
+      <td>2026-11</td>
+      <td>0,27%</td>
+      <td>-66,2%</td>
     </tr>
     
     <tr>
-        <td>2026-10</td>
-        <td>0.32%</td>
-        <td>-60.0%</td>
+      <td>2026-10</td>
+      <td>0,32%</td>
+      <td>-60,0%</td>
     </tr>
     
     <tr>
-        <td>2026-06</td>
-        <td>0.39%</td>
-        <td>-51.2%</td>
+      <td>2026-06</td>
+      <td>0,39%</td>
+      <td>-51,2%</td>
     </tr>
-    
-
-</table>
-
-</div>
-
-</div>
-
+    </table>
+    </div>
+  </div>
 </section>
 
-<!-- ===================================== -->
-<!-- VALIDACIÓN SEMANA 4 -->
-<!-- ===================================== -->
-
-<section
-id="semana4"
-class="panel">
-
-<div class="panel-title">
-
-📅 Validación Hipótesis Semana 4
-
-</div>
-
-<table>
-
-<tr>
-
-<th>Semana</th>
-
-<th>Base Promedio</th>
-
-<th>% Respuesta</th>
-
-</tr>
-
-
+<section id="semana4" class="panel">
+  <div class="panel-title">📅 Validación Hipótesis Semana 4</div>
+  <table>
+    <tr><th>Semana</th><th>Base Promedio</th><th>% Respuesta</th></tr>
+    
     <tr>
-        <td>Semana 4</td>
-        <td class="semana4">
-            22,572
-        </td>
-        <td class="semana4">
-            0.68%
-        </td>
+      <td>Semana Inicial</td>
+      <td class="">52.776</td>
+      <td class="">0,62%</td>
     </tr>
     
     <tr>
-        <td>Semana 5</td>
-        <td class="">
-            21,104
-        </td>
-        <td class="">
-            0.59%
-        </td>
+      <td>Semana 4</td>
+      <td class="semana4">22.572</td>
+      <td class="semana4">0,68%</td>
     </tr>
     
     <tr>
-        <td>Semana Inicial</td>
-        <td class="">
-            52,776
-        </td>
-        <td class="">
-            0.62%
-        </td>
+      <td>Semana 5</td>
+      <td class="">21.104</td>
+      <td class="">0,59%</td>
     </tr>
     
-
-</table>
-
-<br>
-
-<div class="hallazgo">
-
-✅ La evidencia histórica no respalda la hipótesis de caída estructural en Semana 4.
-
-</div>
-
+  </table>
+  <br>
+  <div class="hallazgo">✅ La evidencia histórica no respalda la hipótesis de caída estructural en Semana 4.</div>
 </section>
 
-<!-- ===================================== -->
-<!-- HALLAZGOS -->
-<!-- ===================================== -->
-
-<section
-id="hallazgos"
-class="panel">
-
-<div class="panel-title">
-
-🔍 Hallazgos Principales
-
-</div>
-
-<details open>
-
-<summary>
-
-No existe caída estructural en Semana 4
-
-</summary>
-
-<br>
-
-<p>
-
-La comparación histórica muestra que la Semana 4 mantiene una tasa de respuesta superior a la Semana 5 y niveles estables de volumen.
-
-</p>
-
-</details>
-
-<details>
-
-<summary>
-
-El mejor desempeño se registró en 2025-07 con una tasa de 0.8%.
-
-</summary>
-
-<br>
-
-<p>
-
-El mejor desempeño observado durante el período analizado corresponde a este mes.
-
-</p>
-
-</details>
-
-<details>
-
-<summary>
-
-El menor desempeño se registró en 2026-11 con una tasa de 0.27%.
-
-</summary>
-
-<br>
-
-<p>
-
-Este período presenta la menor conversión y requiere análisis específico de campañas, contactabilidad y segmentación.
-
-</p>
-
-</details>
-
-<details>
-
-<summary>
-
-Policy Touch y contactabilidad
-
-</summary>
-
-<br>
-
-<p>
-
-Se identificaron <b>1,927</b> registros excluidos bajo la causal Policy Touch.
-
-</p>
-
-</details>
-
-<details>
-
-<summary>
-
-Diferencia entre mejor y peor mes
-
-</summary>
-
-<br>
-
-<p>
-
-La diferencia entre el mejor y peor mes corresponde a 66.2%.
-
-</p>
-
-</details>
-
-<details>
-
-<summary>
-
-Oportunidades de mejora
-
-</summary>
-
-<br>
-
-<ul>
-
-<li>Validar Policy Touch con negocio.</li>
-
-<li>Analizar clientes de los meses con menor desempeño.</li>
-
-<li>Evaluar calidad de datos y correos.</li>
-
-<li>Identificar cambios de campañas y segmentación.</li>
-
-<li>Monitorear desempeño mensual automáticamente.</li>
-
-</ul>
-
-</details>
-
+<section id="hallazgos" class="panel">
+  <div class="panel-title">🔍 Hallazgos Principales</div>
+  <details open>
+    <summary>No existe caída estructural en Semana 4</summary>
+    <br><p>La comparación histórica muestra que la Semana 4 mantiene una tasa de respuesta superior a la Semana 5 y niveles estables de volumen.</p>
+  </details>
+  <details>
+    <summary>El mejor desempeño se registró en 2025-07 con una tasa de 0,80%.</summary>
+    <br><p>El mejor desempeño observado durante el período analizado corresponde a este mes.</p>
+  </details>
+  <details>
+    <summary>El menor desempeño se registró en 2026-11 con una tasa de 0,27%.</summary>
+    <br><p>Este período presenta la menor conversión y requiere análisis específico de campañas, contactabilidad y segmentación.</p>
+  </details>
+  <details>
+    <summary>Policy Touch y contactabilidad</summary>
+    <br><p>Se identificaron <b>1.927</b> registros excluidos bajo la causal Policy Touch.</p>
+  </details>
+  <details>
+    <summary>Diferencia entre mejor y peor mes</summary>
+    <br><p>La diferencia relativa entre el mejor y peor mes es de 66,2%.</p>
+  </details>
+  <details>
+    <summary>Oportunidades de mejora</summary>
+    <br>
+    <ul>
+      <li>Validar Policy Touch con negocio.</li>
+      <li>Analizar clientes de los meses con menor desempeño.</li>
+      <li>Evaluar calidad de datos y correos.</li>
+      <li>Identificar cambios de campañas y segmentación.</li>
+      <li>Monitorear desempeño mensual automáticamente.</li>
+    </ul>
+  </details>
 </section>
 
-<!-- ===================================== -->
-<!-- CONCLUSIÓN -->
-<!-- ===================================== -->
-
-<section
-id="conclusion">
-
-<div class="conclusion">
-
-<h2>
-
-Conclusión Análisis 
-
-</h2>
-
-<p>
-
-
-Los datos históricos no evidencian una caída
-estructural asociada a la Semana 4.
-
-La variabilidad observada se concentra en
-meses específicos, siendo 2026-11
-el período de menor desempeño.
-
-El mejor resultado corresponde a
-2025-07 con una tasa de respuesta
-de 0.8%.
-
-Se recomienda profundizar el análisis
-sobre segmentación, calidad de datos,
-contactabilidad y exclusiones por
-Policy Touch.
-
-
-</p>
-
-</div>
-
+<section id="conclusion">
+  <div class="conclusion">
+    <h2>Conclusión del Análisis</h2>
+    <p>Los datos historicos no evidencian una caida estructural asociada a la Semana 4.<br><br>La variabilidad observada se concentra en meses especificos, siendo 2026-11 el periodo de menor desempeno.<br><br>El mejor resultado corresponde a 2025-07, con una tasa de respuesta de 0,80%.<br><br>Se recomienda profundizar el analisis sobre segmentacion, calidad de datos, contactabilidad y exclusiones por Policy Touch.</p>
+  </div>
 </section>
-
 </div>
-
-<!-- ===================================== -->
-<!-- CHART JS -->
-<!-- ===================================== -->
+</div>
 
 <script>
+// ==================================================
+// ACCESO VISUAL: no protege el HTML ni sus datos
+// ==================================================
+const PASSWORD_DASHBOARD = "1";
 
-const ctx =
-document.getElementById(
-'graficoMensual'
-);
-
-new Chart(ctx, {
-
-type:'bar',
-
-data: {
-
-labels:[
-'2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11'
-],
-
-datasets:[
-
-{
-
-label:'Tasa de Respuesta',
-
-data:[
-0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.27
-],
-
-backgroundColor:'#008F39',
-
-borderRadius:6
-
-},
-
-{
-
-type:'line',
-
-label:'Tendencia',
-
-data:[
-0.77,0.8,0.78,0.76,0.8,0.71,0.79,0.76,0.7,0.58,0.73,0.6,0.39,0.48,0.55,0.52,0.32,0.27
-],
-
-borderColor:'#2B3137',
-
-backgroundColor:'#008F39',
-
-pointRadius:5,
-
-pointHoverRadius:7,
-
-borderWidth:3,
-
-fill:false,
-
-tension:.3
-
+function mostrarDashboard() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboardContent').style.display = 'block';
+  if (window.npsChart) {
+    window.npsChart.resize();
+  }
 }
 
-]
+function validarAcceso() {
+  const input = document.getElementById('passwordInput');
+  const error = document.getElementById('loginError');
 
-},
-
-options: {
-
-responsive:true,
-
-plugins: {
-
-legend: {
-display:true
+  if (input.value === PASSWORD_DASHBOARD) {
+    sessionStorage.setItem('nps_acceso', 'autorizado');
+    error.textContent = '';
+    input.value = '';
+    mostrarDashboard();
+  } else {
+    error.textContent = 'Contraseña incorrecta. Intenta nuevamente.';
+    input.value = '';
+    input.focus();
+  }
 }
 
-},
+function mostrarPassword() {
+  const input = document.getElementById('passwordInput');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
 
-scales: {
-    y: {
+document.getElementById('loginButton').addEventListener('click', validarAcceso);
+document.getElementById('eyeButton').addEventListener('click', mostrarPassword);
+document.getElementById('passwordInput').addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') validarAcceso();
+});
+
+if (sessionStorage.getItem('nps_acceso') === 'autorizado') {
+  mostrarDashboard();
+}
+
+// ==================================================
+// CHART.JS
+// ==================================================
+const ctx = document.getElementById('graficoMensual');
+
+window.npsChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ["2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11"],
+    datasets: [
+      {
+        label: 'Tasa de Respuesta',
+        data: [0.77, 0.8, 0.78, 0.76, 0.8, 0.71, 0.79, 0.76, 0.7, 0.58, 0.73, 0.6, 0.39, 0.48, 0.55, 0.52, 0.32, 0.27],
+        backgroundColor: '#008F39',
+        borderRadius: 6
+      },
+      {
+        type: 'line',
+        label: 'Tendencia',
+        data: [0.77, 0.8, 0.78, 0.76, 0.8, 0.71, 0.79, 0.76, 0.7, 0.58, 0.73, 0.6, 0.39, 0.48, 0.55, 0.52, 0.32, 0.27],
+        borderColor: '#2B3137',
+        backgroundColor: '#008F39',
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        borderWidth: 3,
+        fill: false,
+        tension: 0.3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true }
+    },
+    scales: {
+      y: {
         beginAtZero: true,
         max: 1.5,
         title: {
-            display: true,
-            text: '% Respuesta'
+          display: true,
+          text: '% Respuesta'
         }
+      }
     }
-}
-
-}
-
+  }
 });
-
 </script>
-
 </body>
-
 </html>
