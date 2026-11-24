@@ -113,6 +113,74 @@ section[id] { scroll-margin-top:100px; }
   .brand-logo {height:34px; }
   .logo {font-size:21px;}
 }
+.btn-infografia {
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    z-index:1000;
+    background:#008F39;
+    color:white;
+    border:none;
+    padding:16px 22px;
+    border-radius:30px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+.modal-infografia {
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(0,0,0,.85);
+    padding:25px;
+    overflow:auto;
+}
+
+.modal-contenido {
+    background:white;
+    max-width:1600px;
+    margin:auto;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.modal-header {
+    background:#008F39;
+    color:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header button {
+    background:transparent;
+    border:none;
+    color:white;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.imagen-contenedor img {
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+.modal-footer {
+    padding:20px;
+    text-align:center;
+}
+
+.modal-footer a {
+    background:#008F39;
+    color:white;
+    padding:12px 25px;
+    border-radius:8px;
+    text-decoration:none;
+}
 </style>
 </head>
 <body>
@@ -144,7 +212,55 @@ section[id] { scroll-margin-top:100px; }
 </div>
 
 <!-- Dashboard oculto hasta ingresar -->
-<div id="dashboardContent">
+<div id="dashboardContent"
+<!-- BOTON INFOGRAFIA -->
+
+<button
+    class="btn-infografia"
+    onclick="abrirInfografia()"
+>
+    📊 Ver informe ejecutivo
+</button>
+
+<!-- MODAL INFOGRAFIA -->
+
+<div id="modalInfografia" class="modal-infografia">
+
+    <div class="modal-contenido">
+
+        <div class="modal-header">
+
+            <h2>Informe Ejecutivo NPS Cartera</h2>
+
+            <button onclick="cerrarInfografia()">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="imagen-contenedor">
+
+            <img
+                src="./Imagenes/infografia_nps_cartera.png"
+                alt="Infografía NPS Cartera"
+            >
+
+        </div>
+
+        <div class="modal-footer">
+
+            <a
+                href="./Imagenes/infografia_nps_cartera.png"
+                download="Infografia_NPS_Cartera.png"
+            >
+                Descargar PNG
+            </a>
+
+        </div>
+
+    </div>
+
+</div>>
 <header class="topbar">
 <div class="topbar-wrap">
    <div class="brand"><a href="https://datastudio.google.com/reporting/cbddaa1b-efe3-4b13-8e87-61d83bb07cdc/page/p_5cwan25n0d">
@@ -165,7 +281,7 @@ section[id] { scroll-margin-top:100px; }
 <section class="hero">
   <div class="eyebrow">ANÁLISIS EJECUTIVO | NPS CARTERA</div>
   <h1>Comprender qué impulsa la respuesta de clientes y validar si existe una caída estructural en Semana 4</h1>
-  <p>Dashboard automatizado desde BigQuery. Actualización: 23/11/2026 18:54</p>
+  <p>Dashboard automatizado. Actualización: 24/11/2026 15:12</p>
 </section>
 
 <section class="kpis">
@@ -472,6 +588,17 @@ section[id] { scroll-margin-top:100px; }
 </div>
 
 <script>
+function abrirInfografia() {
+    document.getElementById(
+        'modalInfografia'
+    ).style.display = 'block';
+}
+
+function cerrarInfografia() {
+    document.getElementById(
+        'modalInfografia'
+    ).style.display = 'none';
+}
 // ==================================================
 // ACCESO VISUAL: no protege el HTML ni sus datos
 // ==================================================
